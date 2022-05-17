@@ -53,6 +53,24 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include("Password is too long (maximum is 128 characters)")
       end
+      it 'passwordが英字のみでは登録できない' do
+        @user.password = 'abcdefgh'
+        @user.password_confirmation = @user.password
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password is invalid. Input a mixture of single-byte alphanumeric characters.")
+      end
+      it 'passwordが数字のみでは登録できない' do
+        @user.password = '12345678'
+        @user.password_confirmation = @user.password
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password is invalid. Input a mixture of single-byte alphanumeric characters.")
+      end
+      it 'passwordが全角文字を含むと登録できない' do
+        @user.password = '1qaz2wた田'
+        @user.password_confirmation = @user.password
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password is invalid. Input a mixture of single-byte alphanumeric characters.")
+      end
       it 'passwordとpassword_confirmationが不一致では登録できない' do
         @user.password = Faker::Internet.password(min_length: 10)
         @user.valid?
@@ -98,7 +116,7 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include("First name kana is invalid. Input full-width katakana characters.")
       end
-      it 'birthdatが空では登録できない' do
+      it 'birthdayが空では登録できない' do
         @user.birthday = ''
         @user.valid?
         expect(@user.errors.full_messages).to include("Birthday can't be blank")
