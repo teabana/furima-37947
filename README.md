@@ -15,9 +15,8 @@
 
 ## Association
 
-has_many: :products
-has_many: :purchaseorders
-has_one: :card
+has_many :products
+has_many :purchaseorders
 
 ## productsテーブル
 
@@ -34,8 +33,8 @@ has_one: :card
 | user               | references | null: false, foreign_key: true |
 ## Association
 
-belongs_to: :user
-has_one: :purchaseorder
+belongs_to :user
+has_one :purchaseorder
 
 ## purchaseordersテーブル
 
@@ -46,33 +45,22 @@ has_one: :purchaseorder
 
 ## Association
 
-belongs_to: :user
-belongs_to: :product
-has_one: :destination
+belongs_to :user
+belongs_to :product
+has_one :destination
 
 ## destinationsテーブル
 
 | Column           | Type       | Options                        |
 | -----------------| ---------- | ------------------------------ |
-| postalcode       | integer    | null: false                    |
+| postalcode       | string     | null: false                    |
 | prefecrure_id    | integer    | null: false                    |
 | city             | string     | null: false                    |
-| blockname        | integer    | null: false                    |
+| blockname        | string     | null: false                    |
 | building         | string     |                                |
-| phonenumber      | integer    | null: false                    |
+| phonenumber      | string     | null: false                    |
 | purchaseorder    | references | null: false, foreign_key: true |
 
 ## Association
 
 belongs_to: :purchaseorder
-
-## purchaseordersテーブル
-
-| Column             | Type       | Options                        |
-| ------------------ | ---------- | ------------------------------ |
-| customer_token     | string     | null: false                    |
-| user               | references | null: false, foreign_key: true |
-
-## Association
-
-belongs_to: :user
