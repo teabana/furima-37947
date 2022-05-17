@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :products
+
   with_options presence: true do
     validates :nickname
     # ひらがな、カタカナ、漢字のみ許可する
