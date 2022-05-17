@@ -36,7 +36,7 @@ has_many :purchaseorders
 belongs_to :user
 has_one :purchaseorder
 
-## purchaseordersテーブル
+## purchase_ordersテーブル
 
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
@@ -53,13 +53,13 @@ has_one :destination
 
 | Column           | Type       | Options                        |
 | -----------------| ---------- | ------------------------------ |
-| postalcode       | string     | null: false                    |
+| postal_code       | string     | null: false                    |
 | prefecrure_id    | integer    | null: false                    |
 | city             | string     | null: false                    |
 | blockname        | string     | null: false                    |
 | building         | string     |                                |
-| phonenumber      | string     | null: false                    |
-| purchaseorder    | references | null: false, foreign_key: true |
+| phone_number      | string     | null: false                    |
+| purchase_order    | references | null: false, foreign_key: true |
 
 ## Association
 
