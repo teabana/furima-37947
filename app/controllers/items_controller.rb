@@ -28,12 +28,11 @@ class ItemsController < ApplicationController
 
   def update
     if @product.update(product_params)
-      redirect_to     item_path
+      redirect_to item_path
     else
       render :edit
     end
   end
-
 
   private
 
@@ -47,10 +46,6 @@ class ItemsController < ApplicationController
   end
 
   def ensure_user
-    if @product.user_id != current_user.id
-      redirect_to root_path
-    end
+    redirect_to root_path if @product.user_id != current_user.id
   end
-
-
 end
