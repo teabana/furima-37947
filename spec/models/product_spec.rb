@@ -76,7 +76,7 @@ RSpec.describe Product, type: :model do
       it 'ユーザ情報がなけれな出品できない' do
         @product.user = nil
         @product.valid?
-        expect(@product.errors.full_messages).to include("User must exist")
+        expect(@product.errors.full_messages).to include('User must exist')
       end
     end
   end

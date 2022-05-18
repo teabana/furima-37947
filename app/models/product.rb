@@ -7,7 +7,8 @@ class Product < ApplicationRecord
   belongs_to :shipping_day
 
   belongs_to :user
-  has_one_attached :image
+  has_one_attached :image, dependent: :destroy
+  has_one :purchase_order
 
   with_options presence: true do
     validates     :image
