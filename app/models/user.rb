@@ -21,6 +21,7 @@ class User < ApplicationRecord
     validates :birthday
   end
   # 半角英数字のみ許可する
-  validates :password, format: {with: /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i, message: "is invalid. Input a mixture of single-byte alphanumeric characters."}
-
+  validates :password,
+            format: { with: /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i,
+                      message: 'is invalid. Input a mixture of single-byte alphanumeric characters.' }
 end
