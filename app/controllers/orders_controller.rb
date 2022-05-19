@@ -1,7 +1,12 @@
 class OrdersController < ApplicationController
 
   def index
-    @purchase_destination = PurchaseDestination.find(new)
-    @product = Product.find(parasm[:id])
+    @purchase_destination = PurchaseDestination.new
+    @product = Product.find(params[:item_id])
   end
+
+  def create
+    binding.pry
+  end
+
 end

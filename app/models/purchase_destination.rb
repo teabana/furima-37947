@@ -11,7 +11,7 @@ class PurchaseDestination
     #整数のみ許可する
     validates     :phone_number,   numericality: { only_integer: true,  message: 'is invalid. Input only number'}
     #10桁~11桁のみ許可する
-    validates     :phone_number,   numericality: { length: in: 10..11,  message: 'is too short'}
+    validates     :phone_number,   length: { in: 10..11,  message: 'is too short'}
   end
 
   def save
