@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+  before_action :ensure_buyer, :index
 
   def index
     @purchase_destination = PurchaseDestination.new
@@ -38,4 +39,9 @@ class OrdersController < ApplicationController
     )
   end
 
+  def ensure_buyer
+    @product = Product.find(params[:item_id])
+    @purchase_order = @product.purchase_order
+    redirect_to root_path if @purchase_order != nil
+  end
 end

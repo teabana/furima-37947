@@ -1,7 +1,8 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :find_product, only: [:show, :edit, :update, :destroy]
-  before_action :ensure_user, only: [:edit, :destroy]
+  before_action :ensure_user_sale, only: [:edit, :destroy]
+  before_action :ensure_user_sold, only: :edit
 
   def index
     @products = Product.all.order(created_at: 'DESC')
@@ -50,7 +51,12 @@ class ItemsController < ApplicationController
     @product = Product.find(params[:id])
   end
 
-  def ensure_user
+  def ensure_user_sale
     redirect_to root_path if @product.user_id != current_user.id
+  end
+
+  def ensure_user_sold
+    @purchase_order = @product.purchase_order
+    redirect_to root_path if @purchase_order != nil
   end
 end

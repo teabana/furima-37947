@@ -3,13 +3,13 @@ require 'rails_helper'
 RSpec.describe PurchaseDestination, type: :model do
   before do
     purchase_order = FactoryBot.create(:purchase_order)
-    @purchase_destination = FactoryBot.build(:purchase_destination, purchaseorder_id: purchase_order.id)
+    @purchase_destination = FactoryBot.build(:purchase_destination, purchase_order_id: purchase_order.id)
     sleep(0.1)
   end
 
   describe '商品購入' do
     context '購入可能な場合' do
-      it 'すべての値が正しく入力されていれば購入できる' do
+      it 'トークンと発送先情報が正しく入力されていれば購入できる' do
         expect(@purchase_destination).to be_valid
       end
 
@@ -18,8 +18,12 @@ RSpec.describe PurchaseDestination, type: :model do
         expect(@purchase_destination).to be_valid
       end
     end
-
     context '購入不可能な場合' do
+      it 'トークンが空だと購入できない' do
+        @purchase_destination.token = ''
+        @purchase_destination.valid?
+        expect(@purchase_destination.errors.full_messages).to include("Token can't be blank")
+      end
       it 'postal_codeが空だと購入できない' do
         @purchase_destination.postal_code  = ''
         @purchase_destination.valid?
