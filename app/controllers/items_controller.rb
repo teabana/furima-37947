@@ -57,6 +57,6 @@ class ItemsController < ApplicationController
 
   def ensure_user_sold
     @purchase_order = @product.purchase_order
-    redirect_to root_path if @purchase_order != nil
+    redirect_to root_path unless @purchase_order.nil?
   end
 end

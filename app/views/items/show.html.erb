@@ -23,7 +23,7 @@
       </span>
     </div>
 
-    <% if user_signed_in? %>
+    <% if user_signed_in? && @product.purchase_order == nil %>
       <% if @product.user_id == current_user.id %> 
 
       <%= link_to "商品の編集", edit_item_path(@product), method: :get, class: "item-red-btn" %>
