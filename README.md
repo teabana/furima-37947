@@ -53,13 +53,13 @@ has_one :destination
 
 | Column           | Type       | Options                        |
 | -----------------| ---------- | ------------------------------ |
-| postal_code       | string     | null: false                    |
+| postal_code      | string     | null: false                    |
 | prefecrure_id    | integer    | null: false                    |
 | city             | string     | null: false                    |
 | blockname        | string     | null: false                    |
 | building         | string     |                                |
-| phone_number      | string     | null: false                    |
-| purchase_order    | references | null: false, foreign_key: true |
+| phone_number     | string     | null: false                    |
+| purchase_order   | references | null: false, foreign_key: true |
 
 ## Association
 
