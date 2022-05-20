@@ -4,6 +4,8 @@ class PurchaseOrderDestination
                 :purchase_order_id, :token
 
   with_options presence: true do
+    validates     :user_id
+    validates     :product_id
     validates     :token
     # 3桁-4桁の整数の組み合わせのみ許可する
     validates     :postal_code, format: { with: /\A\d{3}-\d{4}\z/, message: 'is invalid. Enter it as follows (e.g. 123-4567)' }
@@ -11,10 +13,10 @@ class PurchaseOrderDestination
     validates     :city
     validates     :blockname
     # 整数のみ許可する
-    validates     :phone_number, numericality: { only_integer: true, message: 'is invalid. Input only number' }
+    validates     :phone_number, numericality: { only_integer: true, message: 'is invalid. Input only half-width number' }
   end
   # 10桁~11桁のみ許可する
-  validates :phone_number, length: { in: 10..11, message: 'is too short' }
+  validates :phone_number, length: { in: 10..11, message: 'is too long or too short (10-11 digits)' }
 
   def save
     # 購入者情報を保存し、変数purchaseorderに代入する。

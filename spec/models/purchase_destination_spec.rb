@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe PurchaseOrderDestination, type: :model do
   before do
-    purchase_order = FactoryBot.create(:purchase_order)
-    @purchase_order_destination = FactoryBot.build(:purchase_order_destination, purchase_order_id: purchase_order.id)
+    user = FactoryBot.create(:user)
+    product = FactoryBot.create(:product)
+    @purchase_order_destination = FactoryBot.build(:purchase_order_destination, user_id: user.id, product_id: product.id)
     sleep(0.1)
   end
 
@@ -44,6 +45,11 @@ RSpec.describe PurchaseOrderDestination, type: :model do
         @purchase_order_destination.valid?
         expect(@purchase_order_destination.errors.full_messages).to include("Prefecture can't be blank")
       end
+      it 'prefecture_idが0だと購入できない' do
+        @purchase_order_destination.prefecture_id = 0
+        @purchase_order_destination.valid?
+        expect(@purchase_order_destination.errors.full_messages).to include("Prefecture can't be blank")
+      end
       it 'cityが空だと購入できない' do
         @purchase_order_destination.city = ''
         @purchase_order_destination.valid?
@@ -59,10 +65,30 @@ RSpec.describe PurchaseOrderDestination, type: :model do
         @purchase_order_destination.valid?
         expect(@purchase_order_destination.errors.full_messages).to include("Phone number can't be blank")
       end
+      it 'phone_numberが半角数字以外が含まれると購入できない' do
+        @purchase_order_destination.phone_number = 'abc12345あいう'
+        @purchase_order_destination.valid?
+        expect(@purchase_order_destination.errors.full_messages).to include('Phone number is invalid. Input only half-width number')
+      end
       it 'phone_numberが9桁以下だと購入できない' do
         @purchase_order_destination.phone_number = Faker::Number.number(digits: 9)
         @purchase_order_destination.valid?
-        expect(@purchase_order_destination.errors.full_messages).to include('Phone number is too short')
+        expect(@purchase_order_destination.errors.full_messages).to include('Phone number is too long or too short (10-11 digits)')
+      end
+      it 'phone_numberが12桁以上だと購入できない' do
+        @purchase_order_destination.phone_number = Faker::Number.number(digits: 12)
+        @purchase_order_destination.valid?
+        expect(@purchase_order_destination.errors.full_messages).to include('Phone number is too long or too short (10-11 digits)')
+      end
+      it 'user_idが空だと購入できない' do
+        @purchase_order_destination.user_id = nil
+        @purchase_order_destination.valid?
+        expect(@purchase_order_destination.errors.full_messages).to include("User can't be blank")
+      end
+      it 'product_idが空だと購入できない' do
+        @purchase_order_destination.product_id = nil
+        @purchase_order_destination.valid?
+        expect(@purchase_order_destination.errors.full_messages).to include("Product can't be blank")
       end
     end
   end
